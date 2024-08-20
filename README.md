@@ -130,11 +130,6 @@ Enter the following details in the Streamlit app to get insurance premium predic
 | :-------- | :------- | :------------------------- |
 |`predicted_premium`|	`float`|	Estimated insurance premium value|
 
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
 ## Model
 
 **Model Overview**
@@ -228,7 +223,7 @@ Visit the app URL in your web browser.
 
 ## Support
 
-For support, email fake@fake.com or join our Slack channel.
+For support, ambigapathikavin2@gmail.com 
 
 
 ## Future Enhancements
@@ -302,7 +297,7 @@ The application is deployed using [Streamlit Sharing](https://streamlit.io/shari
 
 ### **3. Configuration and Security**
 
-- **Environment Variables:** Configure environment variables as needed for sensitive information.
+- **Environment Variables:** Configure environment variables for sensitive information.
 - **Access Controls:** Set up appropriate access controls to secure the application and data.
 - **Data Privacy:** Ensure compliance with data privacy regulations and handle user data responsibly.
 
@@ -314,16 +309,6 @@ The application is deployed using [Streamlit Sharing](https://streamlit.io/shari
 For any issues or assistance with deployment, please refer to the documentation or contact support.
 
 
-
-## FAQ
-
-#### Question 1
-
-Answer 1
-
-#### Question 2
-
-Answer 2
 
 ## **FAQ**
 
