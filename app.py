@@ -1,8 +1,33 @@
 import streamlit as st
-import requests
+import pandas as pd
+from joblib import load
 
-# Flask API URL
-FLASK_API_URL = "http://localhost:5000/predict"
+# Load the pre-trained model and preprocessor
+model = load('artifacts/model_evaluation/models/best_model.joblib')
+preprocessor = load('artifacts/feature_engineering/preprocessor.joblib')
+
+def calculate_normalized_risk(medical_history: str) -> float:
+    risk_scores = {
+        "diabetes": 6,
+        "heart disease": 8,
+        "high blood pressure": 6,
+        "thyroid": 5,
+        "no disease": 0,
+        "none": 0
+    }
+    
+    diseases = medical_history.lower().split(" & ") if isinstance(medical_history, str) else []
+    total_risk_score = sum(risk_scores.get(disease.strip(), 0) for disease in diseases)
+
+    max_score = 14
+    min_score = 0
+    normalized_risk_score = (total_risk_score - min_score) / (max_score - min_score) if max_score > min_score else 0
+    return normalized_risk_score
+
+def preprocess(input_df: pd.DataFrame) -> pd.DataFrame:
+    if 'medical_history' in input_df.columns:
+        input_df['normalized_risk_score'] = input_df['medical_history'].apply(calculate_normalized_risk)
+    return preprocessor.transform(input_df)
 
 st.title('Health Insurance Cost Predictor')
 
@@ -56,6 +81,9 @@ with row4[1]:
 with row4[2]:
     medical_history = st.selectbox('Medical History', categorical_options['Medical History'])
 
+# Add input for income level
+income_level = st.selectbox('Income Level', ['Low', 'Medium', 'High'])
+
 # Collect inputs into a dictionary with exact column names as expected by the model
 input_df = {
     'age': age,
@@ -71,24 +99,21 @@ input_df = {
     'region': region,
     'medical_history': medical_history,
     'annual_premium_amount': 0,  # Default value or add input if necessary
-    'income_level': '',  # Default value or add input if necessary
+    'income_level': income_level,  # Add the income_level input here
     'normalized_risk_score': 0  # Default value or add input if necessary
 }
 
 # Make a prediction when the button is clicked
 if st.button('Predict'):
     try:
-        # Send input to Flask API
-        response = requests.post(FLASK_API_URL, json=input_df)
-        if response.status_code == 200:
-            prediction = response.json()
-            predicted_cost = prediction[0]['predicted_cost'] if isinstance(prediction, list) else prediction['predicted_cost']
-            st.success(f'Predicted Health Insurance Cost: ₹{predicted_cost:,}')
+        # Preprocess the input data
+        processed_data = preprocess(pd.DataFrame([input_df]))
 
-        else:
-            error_message = response.json().get('error', 'Unknown error occurred.')
-            st.error(f"Error: {error_message}")
+        # Make predictions
+        predictions = model.predict(processed_data)
+        predicted_cost = round(predictions[0][0])  # Extract the scalar value and round
+
+        st.success(f'Predicted Health Insurance Cost: ₹{predicted_cost:,}')
+
     except Exception as e:
-        st.error(f"Exception occurred: {e}")
-
-
+        st.error(f"Error occurred: {e}")
