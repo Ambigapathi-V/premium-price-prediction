@@ -55,6 +55,16 @@ To set up the project locally follow these steps:
 pip install -r requirements.txt
 ```
 
+**4. Run the main.py:**
+```bash
+python main.py
+```
+
+**4. Run the Streamlit**
+```
+streamlit run app.py
+```
+
 ## Base URL
  http://premium-price-prediction-insurance.streamlit.app/
 ## Input Data
