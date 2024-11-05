@@ -1,8 +1,7 @@
 
 <<<<<<< HEAD
 
-=======
->>>>>>> 97e6a3d165a25bb20eb44c9b71bf308090e4e5dc
+
 #  Predictive Health Insurance Model for Shield Insurance
 
 
