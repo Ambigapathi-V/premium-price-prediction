@@ -1,0 +1,16 @@
+pandas
+numpy
+seaborn
+matplotlib
+statsmodels
+scikit-learn
+joblib
+Flask
+python-box
+mlflow
+types-PyYAML
+tqdm
+ensure
+Flask-Cors
+openpyxl
+cassandra-driver

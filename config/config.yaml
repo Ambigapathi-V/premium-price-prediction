@@ -1,0 +1,42 @@
+artifacts_root: artifacts  # Root directory for all artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion  # Directory for data ingestion artifacts
+  input_path: data/premiums.xlsx  # Path to the input Excel file
+  output_path: artifacts/data_ingestion
+  raw_data_path : artifacts/data_ingestion/raw.csv  # Output path for processed CSV
+  test_data_path : artifacts/data_ingestion/test.csv
+  train_data_path : artifacts/data_ingestion/train.csv  # Output path for training data
+  
+data_preprocessing:
+  root_dir: artifacts/data_preprocessing  # Directory for preprocessing artifacts
+  input_path: artifacts/data_ingestion/raw.csv  # Input path for preprocessing
+  output_path: artifacts/data_preprocessing  # Output path for preprocessed data
+  raw_filepath : artifacts/data_ingestion/raw.csv  # Output path for processed CSV
+  X_test_filepath : artifacts/data_preprocessing/X_test.csv
+  X_train_filepath : artifacts/data_preprocessing/X_train.csv
+  y_test_filepath : artifacts/data_preprocessing/y_test.csv
+  y_train_filepath : artifacts/data_preprocessing/y_train.csv
+  preprocess_column: "annual_premium_amount"  # Column to preprocess
+
+feature_engineering:
+  root_dir: artifacts/feature_engineering  # Directory for feature engineering artifacts
+  input_path: artifacts/data_preprocessing/premiums.csv  # Input path for feature engineering
+  output_path: artifacts/feature_engineering  # Output path for engineered features
+  model_path: artifacts/models/  # Path to save models
+  X_test_filepath : artifacts/data_preprocessing/X_test.csv
+  X_train_filepath : artifacts/data_preprocessing/X_train.csv
+  target_column: "annual_premium_amount"  # Target column for prediction
+  test_filepath : artifacts/data_preprocessing/X_test.csv
+  train_filepath : artifacts/data_preprocessing/X_train.csv
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation  # Directory for preprocessing artifacts
+  output_path: artifacts/model_evaluation  
+  X_test_filepath : artifacts/feature_engineering/X_test.csv
+  X_train_filepath : artifacts/feature_engineering/X_train.csv
+  y_test_filepath : artifacts/data_preprocessing/y_test.csv
+  y_train_filepath : artifacts/data_preprocessing/y_train.csv
+  model_path: artifacts/model_evaluation/models/best_model.joblib  # Path to load models
+  target_column: "annual_premium_amount"
+
